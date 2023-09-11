@@ -48,6 +48,9 @@ public class Ablock : NodeBase{
 
 public class Bus : NodeBase{
     public string name;
+    public bool[] Outputs{
+        get => _Outputs;
+    }
     public Bus(int size, string name):base(size, size){
         this.name = name;
     }

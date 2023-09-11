@@ -20,6 +20,7 @@ public class SignalChangeEventArgs:EventArgs{
 public class NodeBase:Node {
     protected bool[] _Inputs;
     protected bool[] _Outputs;
+    public List<string> ConnectedTo = new List<string>();
     private bool isCold = true;
     protected event Action<SignalChangeEventArgs> OnOutputChanged;
 
