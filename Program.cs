@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using System.Reflection.Metadata.Ecma335;
+﻿using System.Reflection.Metadata.Ecma335;
 using Lab1;
 
 var sw = new System.Diagnostics.Stopwatch();
@@ -12,11 +10,12 @@ Bus bus4 = new Bus(3, "Final");
 
 Console.WriteLine(@"Якщо ви хочете трикутник напишіть 1, інакше Return");
 var ask = Console.ReadLine();
+//var test = new Triangle(bus1,bus2);
+
 if(ask == "1")
     new Triangle(bus1,bus2);
 else 
     new Pyramid(bus1,bus2);
-
 
 /*
     XORи поєднуються зі зсувом відносно шини. а перший це заземлення
@@ -98,9 +97,23 @@ if(choice != 3){
     return;
 }
 
+//make j array of digits sorted y digit amount aka 001 010 100 011 101 110 111
+List<int> jj = new List<int>();
+for(int i=0;i<Math.Pow(2,6);i++)
+    jj.Add(i);
 
+jj.Sort((a,b) => {
+    int a1 = 0;
+    int b1 = 0;
+    for(int i=0;i<6;i++){
+        a1 += (a & (1 << i)) != 0 ? 1 : 0;
+        b1 += (b & (1 << i)) != 0 ? 1 : 0;
+    }
+    return a1.CompareTo(b1);
+});
 
-for(int i=0;i<Math.Pow(2,6);i++){
+foreach(int i in jj){
+//for(int i=0;i<Math.Pow(2,6);i++){
     Console.Write($"input: {i}, binary: {Convert.ToString(i, 2).PadLeft(6, '0')} >  ");
     for(int j=0;j<6;j++){
         bus1[j] = (i & (1 << j)) != 0;

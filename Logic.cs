@@ -45,7 +45,7 @@ public class NodeBase:Node {
         _Inputs[index] = value;
         bool[] prev = _Outputs.Clone() as bool[];
         Compute();
-        if(Enumerable.SequenceEqual(prev, _Outputs)){
+        if(Enumerable.SequenceEqual(prev, _Outputs) && true){
             return; //buggy for child nodes
             if(isCold)
                 isCold = false;//init child nodes
@@ -60,6 +60,7 @@ public class NodeBase:Node {
         OnOutputChanged += signalArgs => {
             if(signalArgs.Index == src){
                 node.Write(signalArgs.Value, dst);
+                //Console.WriteLine($"\u001b[32mSignal changed at {signalArgs.Node} {signalArgs.Index} to {signalArgs.Value}");
             };
         };
     }

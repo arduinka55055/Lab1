@@ -6,6 +6,9 @@ namespace Lab1;
 class Pyramid{
     protected Ablock[,] ablocks;
     Bus bus1, bus2;
+    public Ablock a = new Ablock();
+    public Ablock b = new Ablock();
+    public Ablock c = new Ablock();
     public Pyramid(Bus input, Bus output){
         ablocks =  new Ablock[3,3];
         bus1 = input;
@@ -25,21 +28,24 @@ class Pyramid{
                 Console.WriteLine($"creating block at {x},{y}");
                 if(x>0){
                     int yileft = Math.Max(y-1,0); //вище або 0 (стеля)
-                    Console.WriteLine($"block at {x},{y} A connected to {x-1},{yileft}");
-                    ablocks[x-1,yileft].Connect(ablocks[x,y], 0, 0);
-                    ablocks[x-1,yileft].ConnectedTo.Add($"{x},{y}");
+                    Console.WriteLine($"block at {x},{y} A connected to {x-1},{yileft}" + ((y==0)?"a-a":"b-a"));
+                    if(y==0)
+                        ablocks[x-1,yileft].Connect(ablocks[x,y], 0, 0);
+                    else
+                        ablocks[x-1,yileft].Connect(ablocks[x,y], 1, 0);
+                    ablocks[x-1,yileft].ConnectedTo.Add($"{x},{y}"+ ((y==0)?"a-a":"b-a"));
                     
                     int ydleft = Math.Min(y+1,2); // нижче або 2 (підлога)
-                    ablocks[x,ydleft].Connect(ablocks[x,y], 1, 1);
-                    ablocks[x,ydleft].ConnectedTo.Add($"{x},{y}");
-                    Console.WriteLine($"block at {x},{y} B connected to {x-1},{yileft}");
+                    if(y==2)
+                        ablocks[x-1,ydleft].Connect(ablocks[x,y], 1, 1);
+                    else
+                        ablocks[x-1,ydleft].Connect(ablocks[x,y], 0, 1);
+                    ablocks[x-1,ydleft].ConnectedTo.Add($"{x},{y}"+ ((y==2)?"b-b":"a-b"));
+                    Console.WriteLine($"block at {x},{y} B connected to {x-1},{ydleft}" + ((y==2)?"b-b":"a-b"));
                 }
             }
         }
         //ручне зʼєднання вершини
-        Ablock a = new Ablock();
-        Ablock b = new Ablock();
-        Ablock c = new Ablock();
         //
         ablocks[2,0].Connect(a, 1, 0);//b до а верх
         ablocks[2,1].Connect(a, 0, 1);//a до b верх
